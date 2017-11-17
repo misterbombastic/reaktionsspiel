@@ -2,39 +2,53 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>game</title>
+    <title>trash</title>
   </head>
 
   <style media="screen">
     #form{
-      background: #3dc45b;
+      background-color: transparent;
+      background-repeat: no-repeat;
+      background-position: center;
       border-radius: 0%;
       display: none;
       height: 200px;
       position: relative;
+      transform: rotate(10deg);
       width: 200px;
     }
     #dauerTime{
       font-weight: lighter;
     }
     body{
+      background-image: url("https://st.depositphotos.com/1028644/2164/i/950/depositphotos_21648505-stock-photo-green-grass-texture-from-golf.jpg");
       display: flex;
       height: 100vh;
     }
     h1{
+      color: #dff7ff;
       font-family: sans-serif;
       line-height: 40px;
+    }
+    button{
+      border: none;
     }
   </style>
 
   <body>
-    <h1>Klicke so schnell wie möglich auf die Formen!
-    <br>Deine Reaktionszeit: <span id="dauerTime"></span></h1>
+    <h1>Vergiss deinen Pfand nicht!
+    <br>Deine Zeit für 8ct: <span id="dauerTime"></span>
+    <br>Deine Flaschen: <span id="clicks"></span></h1>
     <button id="form"></button>
 
     <script type="text/javascript">
 
       var startTime = new Date().getTime();
+      var countClick = document.getElementById("form");
+      var count = 0;
+
+      var images = ["material/bier1.png", "material/bier2.png", "material/bier3.png"];
+      images [getRandomInt(0, images.length-1)];
 
       function getRandomInt (min, max){
         var randomInt = Math.floor(Math.random()*(max-min+1)+min);
@@ -44,24 +58,20 @@
       var figure = document.getElementById("form");
 
       function varForm(){
-        var size = getRandomInt (100, 300);
-        var background = getRandomInt (658219, 943115);
+        var size = getRandomInt (200, 300);
+        var rotation = getRandomInt (0, 360);
         var leftvar = getRandomInt (0, window.innerWidth - size);
         var topvar = getRandomInt (100, window.innerHeight - size);
 
         figure.style.width = size +"px";
         figure.style.height = size +"px";
-        figure.style.background = "#"+background;
+        figure.style.backgroundImage = "url("+images[getRandomInt(0, images.length-1)]+")";
+        figure.style.backgroundSize = "contain";
         figure.style.position = "absolute";
         figure.style.left = leftvar + 'px';
         figure.style.top = topvar + 'px';
+        figure.style.transform = "rotate("+rotation+"deg)";
 
-        if(Math.random() > 0.5){
-          figure.style.borderRadius = "50%";
-        }
-        else{
-          figure.style.borderRadius = "0";
-        }
         figure.style.display = "block";
         startTime = new Date().getTime();
      }
@@ -79,7 +89,11 @@
         var dauerTime = (endTime - startTime) / 1000;
 
         document.getElementById("dauerTime").innerHTML = dauerTime + " Sekunden";
+        count += 1;
+        document.getElementById("clicks").innerHTML = count;
         delay();
+
+
       }
 
     </script>
