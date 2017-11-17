@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>game</title>
+  </head>
+
+  <style media="screen">
+    #form{
+      background: #3dc45b;
+      border-radius: 0%;
+      display: none;
+      height: 200px;
+      position: relative;
+      width: 200px;
+    }
+    #dauerTime{
+      font-weight: lighter;
+    }
+    body{
+      display: flex;
+      height: 100vh;
+    }
+    h1{
+      font-family: sans-serif;
+      line-height: 40px;
+    }
+  </style>
+
+  <body>
+    <h1>Klicke so schnell wie möglich auf die Formen!
+    <br>Deine Reaktionszeit: <span id="dauerTime"></span></h1>
+    <button id="form"></button>
+
+    <script type="text/javascript">
+
+      var startTime = new Date().getTime();
+
+      function getRandomInt (min, max){
+        var randomInt = Math.floor(Math.random()*(max-min+1)+min);
+        return randomInt;
+      }
+
+      var figure = document.getElementById("form");
+
+      function varForm(){
+        var size = getRandomInt (100, 300);
+        var background = getRandomInt (658219, 943115);
+        var leftvar = getRandomInt (0, window.innerWidth - size);
+        var topvar = getRandomInt (100, window.innerHeight - size);
+
+        figure.style.width = size +"px";
+        figure.style.height = size +"px";
+        figure.style.background = "#"+background;
+        figure.style.position = "absolute";
+        figure.style.left = leftvar + 'px';
+        figure.style.top = topvar + 'px';
+
+        if(Math.random() > 0.5){
+          figure.style.borderRadius = "50%";
+        }
+        else{
+          figure.style.borderRadius = "0";
+        }
+        figure.style.display = "block";
+        startTime = new Date().getTime();
+     }
+
+     function delay(){
+        setTimeout(varForm, Math.random() * 2000);
+      }
+
+      delay();
+
+      figure.onclick = function(){
+        figure.style.display = "none";
+
+        var endTime = new Date().getTime();
+        var dauerTime = (endTime - startTime) / 1000;
+
+        document.getElementById("dauerTime").innerHTML = dauerTime + " Sekunden";
+        delay();
+      }
+
+    </script>
+
+  </body>
+</html>
